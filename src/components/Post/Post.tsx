@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import "./post.style.css";
 
 type PostProps = {
@@ -8,6 +9,7 @@ type PostProps = {
   ctaText?: string;
   image: string;
   isOpen?: boolean;
+  deleteAction: () => void;
 };
 
 function Post({
@@ -17,10 +19,29 @@ function Post({
   action,
   ctaText = "اطلاعات بیشتر",
   image,
+  deleteAction,
   isOpen = false,
 }: PostProps) {
+  const confirmDelete = () => {
+    const isConfirm = confirm(`are you sure to delete ${title}`);
+    if (isConfirm) {
+      deleteAction();
+    }
+  };
+  const [state, setState] = useState(0);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setState((old) => old + 5);
+      console.log(title);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [title]);
   return (
     <div className="post">
+      <button onClick={confirmDelete}>delete</button>
       {isOpen && <div className={"post-badge"}>درحال ثبت نام</div>}
       <h2 className="post-title">{title}</h2>
       <img src={image} alt="" width={"25%"} />

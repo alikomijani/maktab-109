@@ -7,3 +7,14 @@
   flex-basis: 250px;
   flex-grow: 1;
 }
+.input {
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 2rem;
+  min-width: 500px;
+}
+.search-wrapper {
+  display: flex;
+  padding: 15px;
+  justify-content: center;
+}
