@@ -21,12 +21,7 @@ function Post({
 }: PostProps) {
   return (
     <div className="post">
-      {isOpen ? (
-        <div className={"post-badge"}>درحال ثبت نام</div>
-      ) : (
-        <div className={"post-badge__black"}>اتمام ثبت نام</div>
-      )}
-      <input type="text" />
+      {isOpen && <div className={"post-badge"}>درحال ثبت نام</div>}
       <h2 className="post-title">{title}</h2>
       <img src={image} alt="" width={"25%"} />
       <p className="post-description">{description}</p>
