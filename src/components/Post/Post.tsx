@@ -1,56 +1,51 @@
-import { useEffect, useState } from "react";
 import "./post.style.css";
-
+import { memo } from "react";
+import { pythonImage } from "../../assets";
 type PostProps = {
+  id: number;
   title: string;
   description: string;
   info: string;
-  action: () => void;
+  action: (id: number) => void;
   ctaText?: string;
-  image: string;
+  // image: string;
   isOpen?: boolean;
-  deleteAction: () => void;
+  openAction: (id: number, isOpen: boolean) => void;
 };
 
 function Post({
+  id,
   title,
   description,
   info,
   action,
   ctaText = "اطلاعات بیشتر",
-  image,
-  deleteAction,
+  // image,
+  openAction,
   isOpen = false,
 }: PostProps) {
+  console.log(`${title} is render`);
   const confirmDelete = () => {
     const isConfirm = confirm(`are you sure to delete ${title}`);
     if (isConfirm) {
-      deleteAction();
+      openAction(id, !isOpen);
     }
   };
-  const [state, setState] = useState(0);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setState((old) => old + 5);
-      console.log(title);
-    }, 3000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [title]);
   return (
     <div className="post">
-      <button onClick={confirmDelete}>delete</button>
+      <button onClick={confirmDelete}>
+        {isOpen ? "بستن ثبت نام" : "باز کردن ثبت نام"}
+      </button>
       {isOpen && <div className={"post-badge"}>درحال ثبت نام</div>}
       <h2 className="post-title">{title}</h2>
-      <img src={image} alt="" width={"25%"} />
+      <img src={pythonImage} alt="" width={"25%"} />
       <p className="post-description">{description}</p>
       <div className="post-info">{info}</div>
-      <button className="button button--full" onClick={action}>
+      <button className="button button--full" onClick={() => action(id)}>
         {ctaText}
       </button>
     </div>
   );
 }
-export default Post;
+const MemoPost = memo(Post);
+export default MemoPost;
