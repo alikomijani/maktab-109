@@ -1,12 +1,12 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
-import Layout from "../components/Layout/Layout";
-import Post from "../components/Post/Post";
+import Layout from "../../components/Layout/Layout";
+import Post from "../../components/Post/Post";
 import "./courses.style.css";
 import {
   Course,
   getCoursesApi,
   updateCourseIsOpenApi,
-} from "../api/course.api";
+} from "../../api/course.api";
 
 function Courses() {
   const [courses, setCourses] = useState<Course[]>([]);

@@ -1,6 +1,6 @@
-import Courses from "./pages/Courses";
+import ToDo from "./pages/to-do/ToDo";
 function App() {
-  return <Courses />;
+  return <ToDo />;
 }
 
 export default App;
