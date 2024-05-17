@@ -1,17 +1,17 @@
-import { useReducer } from "react";
-import Layout from "../../components/Layout/Layout";
+import { useContext } from "react";
 import ToDoCard from "../../components/to-do-card/ToDoCard";
-import { sampleTodoList, toDoReducer } from "../../features/to-do";
+import { ThemeContext } from "../../context/ThemeContextProvider";
+import { ToDoContext } from "../../context/ToDoContextProvider";
+
 function ToDo() {
-  const [todoList, dispatch] = useReducer(toDoReducer, sampleTodoList);
+  const { theme, setTheme } = useContext(ThemeContext);
+  const { todoList } = useContext(ToDoContext);
   return (
-    <Layout>
-      <div className={"flex flex-row gap-2"}>
-        {todoList.map((item) => (
-          <ToDoCard key={item.id} dispatchToDo={dispatch} todo={item} />
-        ))}
-      </div>
-    </Layout>
+    <div className={"flex flex-row gap-2"}>
+      {todoList.map((item) => (
+        <ToDoCard key={item.id} todo={item} />
+      ))}
+    </div>
   );
 }
 

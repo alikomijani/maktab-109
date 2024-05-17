@@ -1,6 +1,8 @@
 import "./post.style.css";
-import { memo } from "react";
+import { memo, useContext } from "react";
 import { pythonImage } from "../../assets";
+import { ToDoContext } from "../../context/ToDoContextProvider";
+import { ToDoActionTypesEnum } from "../../features/to-do";
 type PostProps = {
   id: number;
   title: string;
@@ -24,7 +26,7 @@ function Post({
   openAction,
   isOpen = false,
 }: PostProps) {
-  console.log(`${title} is render`);
+  const { dispatch } = useContext(ToDoContext);
   const confirmDelete = () => {
     const isConfirm = confirm(`are you sure to delete ${title}`);
     if (isConfirm) {
@@ -33,8 +35,23 @@ function Post({
   };
   return (
     <div className="post">
-      <button onClick={confirmDelete}>
-        {isOpen ? "بستن ثبت نام" : "باز کردن ثبت نام"}
+      <button
+        onClick={() =>
+          dispatch({
+            type: ToDoActionTypesEnum.CREATE_TO_DO,
+            payload: {
+              todo: {
+                id: "60",
+                description: "این و خودم ساختم",
+                status: false,
+                subTasks: [],
+                title: " ثبت نام دوره" + title,
+              },
+            },
+          })
+        }
+      >
+        {"افزودن یادآور"}
       </button>
       {isOpen && <div className={"post-badge"}>درحال ثبت نام</div>}
       <h2 className="post-title">{title}</h2>

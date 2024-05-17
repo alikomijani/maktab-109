@@ -1,18 +1,16 @@
-import {
-  IToDo,
-  ToDoReducerAction,
-  ToDoActionTypesEnum,
-} from "../../features/to-do";
+import { IToDo, ToDoActionTypesEnum } from "../../features/to-do";
 import { MdDelete } from "react-icons/md";
 import { FaCheck } from "react-icons/fa6";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
+import { useContext } from "react";
+import { ToDoContext } from "../../context/ToDoContextProvider";
 
 type Props = {
   todo: IToDo;
-  dispatchToDo: React.Dispatch<ToDoReducerAction>;
 };
 
-const ToDoCard = ({ todo, dispatchToDo }: Props) => {
+const ToDoCard = ({ todo }: Props) => {
+  const { dispatch } = useContext(ToDoContext);
   return (
     <div className="border p-4 rounded-md">
       <div className="flex justify-between gap-2">
@@ -20,7 +18,7 @@ const ToDoCard = ({ todo, dispatchToDo }: Props) => {
         <button
           className="btn"
           onClick={() => {
-            dispatchToDo({
+            dispatch({
               type: ToDoActionTypesEnum.CHANGE_STATUS,
               payload: { todoId: todo.id },
             });
@@ -31,7 +29,7 @@ const ToDoCard = ({ todo, dispatchToDo }: Props) => {
         <button
           className="btn-icon"
           onClick={() => {
-            dispatchToDo({
+            dispatch({
               type: ToDoActionTypesEnum.REMOVE_TO_DO,
               payload: { todoId: todo.id },
             });
@@ -49,7 +47,7 @@ const ToDoCard = ({ todo, dispatchToDo }: Props) => {
               <button
                 className="btn"
                 onClick={() => {
-                  dispatchToDo({
+                  dispatch({
                     type: ToDoActionTypesEnum.CHANGE_SUBTASK_STATUS,
                     payload: { todoId: todo.id, taskId: subTask.id },
                   });
@@ -60,7 +58,7 @@ const ToDoCard = ({ todo, dispatchToDo }: Props) => {
               <button
                 className="btn-icon"
                 onClick={() => {
-                  dispatchToDo({
+                  dispatch({
                     type: ToDoActionTypesEnum.REMOVE_SUBTASK,
                     payload: { todoId: todo.id, taskId: subTask.id },
                   });

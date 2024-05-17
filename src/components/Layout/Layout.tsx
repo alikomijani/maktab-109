@@ -10,7 +10,7 @@ function Layout({ children }: Props) {
   return (
     <div>
       <Header />
-      {children}
+      <main className="lg:container mx-auto">{children}</main>
       <Footer />
     </div>
   );
