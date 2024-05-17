@@ -12,14 +12,11 @@ export function useGetCourses(search: string) {
     getCoursesApi().then((data) => setCourses(data));
   }, []);
 
-  const toggleCourseStatus = useCallback(
-    (id: number, isOpen: boolean) => {
-      updateCourseIsOpenApi(id, isOpen).then(() => {
-        getCoursesApi().then((data) => setCourses(data));
-      });
-    },
-    [setCourses]
-  );
+  const toggleCourseStatus = useCallback((id: number, isOpen: boolean) => {
+    updateCourseIsOpenApi(id, isOpen).then(() => {
+      getCoursesApi().then((data) => setCourses(data));
+    });
+  }, []);
   const filteredCourses = useMemo(() => {
     return courses.filter((item) =>
       item.title.toLowerCase().includes(search.toLowerCase())
