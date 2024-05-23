@@ -1,19 +1,15 @@
-import Layout from "./components/Layout/Layout";
+import { RouterProvider } from "react-router-dom";
 import AuthContextProvider from "./context/AuthContextProvider";
 import ThemeContextProvider from "./context/ThemeContextProvider";
 import ToDoContextProvider from "./context/ToDoContextProvider";
-import Courses from "./pages/courses/Courses";
-import ToDo from "./pages/to-do/ToDo";
+import { router } from "./routers";
 
 function App() {
   return (
     <AuthContextProvider>
       <ThemeContextProvider>
         <ToDoContextProvider>
-          <Layout>
-            <Courses />
-            <ToDo />
-          </Layout>
+          <RouterProvider router={router} />
         </ToDoContextProvider>
       </ThemeContextProvider>
     </AuthContextProvider>

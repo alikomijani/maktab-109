@@ -13,6 +13,11 @@ export async function getCoursesApi() {
   return response.data;
 }
 
+export async function getCoursesApiById(id: string) {
+  const response = await api.get<Course>(`/courses/${id}`);
+  return response.data;
+}
+
 export async function updateCourseApi(id: number | string, course: Course) {
   const response = await api.put<Course>(`/courses/${id}`, course);
   return response.data;
@@ -25,3 +30,4 @@ export async function updateCourseIsOpenApi(
   const response = await api.patch<Course>(`/courses/${id}`, { isOpen });
   return response.data;
 }
+// create - read  - update - delete

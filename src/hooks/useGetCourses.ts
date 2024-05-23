@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Course,
   getCoursesApi,
+  getCoursesApiById,
   updateCourseIsOpenApi,
 } from "../api/course.api";
 
@@ -24,4 +25,27 @@ export function useGetCourses(search: string) {
   }, [courses, search]);
 
   return { courses, toggleCourseStatus, filteredCourses };
+}
+
+export function useGetCourseById(courseId: string) {
+  const [course, setCourse] = useState<Course>();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  useEffect(() => {
+    setIsLoading(true);
+    setIsError(false);
+    getCoursesApiById(courseId!)
+      .then((data) => {
+        setCourse(data);
+      })
+      .catch((error) => {
+        setIsError(true);
+      })
+      .finally(() => setIsLoading(false));
+  }, [courseId]);
+  return {
+    data: course,
+    isLoading,
+    isError,
+  };
 }

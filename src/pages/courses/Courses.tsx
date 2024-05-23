@@ -2,12 +2,12 @@ import { useState, useCallback } from "react";
 import Post from "../../components/Post/Post";
 import "./courses.style.css";
 import { useGetCourses } from "../../hooks/useGetCourses";
+import { useNavigate } from "react-router-dom";
 
 function Courses() {
   const [search, setSearch] = useState("");
-
-  const { courses, toggleCourseStatus, filteredCourses } =
-    useGetCourses(search);
+  const navigate = useNavigate();
+  const { toggleCourseStatus, filteredCourses } = useGetCourses(search);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -15,14 +15,9 @@ function Courses() {
 
   const courseInfoAction = useCallback(
     (id: number) => {
-      const course = courses.find((item) => item.id === id);
-      if (course) {
-        alert(course.isOpen ? course.title : "end");
-      } else {
-        alert("course not found!");
-      }
+      navigate(`/courses/${id}`);
     },
-    [courses]
+    [navigate]
   );
 
   return (
