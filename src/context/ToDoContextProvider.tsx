@@ -10,7 +10,7 @@ type Props = {
 };
 export const ToDoContext = createContext({
   todoList: sampleTodoList,
-  dispatch: (action: ToDoReducerAction) => {},
+  dispatch: (_: ToDoReducerAction) => {},
 });
 
 function ToDoContextProvider({ children }: Props) {

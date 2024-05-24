@@ -17,6 +17,9 @@ function Header() {
               <Link to="/dashboard">صفحه اصلی</Link>
             </li>
             <li className="hover:border-b-2">
+              <Link to="/dashboard/users">لیست کاربران</Link>
+            </li>
+            <li className="hover:border-b-2">
               <Link to="/dashboard/courses">لیست دوره ها</Link>
             </li>
             <li className="hover:border-b-2">

@@ -2,7 +2,7 @@ import { ReactNode, createContext, useState } from "react";
 
 export const ThemeContext = createContext({
   theme: "light",
-  setTheme: (theme: string) => {},
+  setTheme: (_: string) => {},
 });
 
 type Props = {

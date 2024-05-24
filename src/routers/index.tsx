@@ -1,11 +1,15 @@
+import { Suspense, lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
-import Courses from "../pages/courses/Courses";
-import Course from "../pages/courses/[id]/Course";
-import ToDo from "../pages/to-do/ToDo";
-import Home from "../pages/home/Home";
 import Layout from "../components/Layout/Layout";
 import ErrorPage from "../pages/error/ErrorPage";
-import ProfileLayout from "../components/ProfileLayout/ProfileLayout";
+const Courses = lazy(() => import("../pages/courses/Courses"));
+const Course = lazy(() => import("../pages/courses/[id]/Course"));
+const ToDo = lazy(() => import("../pages/to-do/ToDo"));
+const Home = lazy(() => import("../pages/home/Home"));
+const Users = lazy(() => import("../pages/users/Users"));
+const ProfileLayout = lazy(
+  () => import("../components/ProfileLayout/ProfileLayout")
+);
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -29,11 +33,27 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: (
+          <Suspense fallback={<div>...loading</div>}>
+            <Home />
+          </Suspense>
+        ),
       },
       {
         path: "courses",
-        element: <Courses />,
+        element: (
+          <Suspense fallback={<div>...loading</div>}>
+            <Courses />
+          </Suspense>
+        ),
+      },
+      {
+        path: "users",
+        element: (
+          <Suspense fallback={<div>...loading</div>}>
+            <Users />
+          </Suspense>
+        ),
       },
       {
         path: "courses/create",
@@ -41,16 +61,28 @@ export const router = createBrowserRouter([
       },
       {
         path: "courses/:courseId",
-        element: <Course />,
+        element: (
+          <Suspense fallback={<div>...loading</div>}>
+            <Course />
+          </Suspense>
+        ),
       },
       {
         path: "to-dos",
-        element: <ToDo />,
+        element: (
+          <Suspense fallback={<div>...loading</div>}>
+            <ToDo />
+          </Suspense>
+        ),
       },
       {
         path: "profile",
         errorElement: <ErrorPage />,
-        element: <ProfileLayout />,
+        element: (
+          <Suspense fallback={<div>...loading</div>}>
+            <ProfileLayout />
+          </Suspense>
+        ),
         children: [
           {
             index: true,

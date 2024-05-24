@@ -23,16 +23,10 @@ function Post({
   action,
   ctaText = "اطلاعات بیشتر",
   // image,
-  openAction,
   isOpen = false,
 }: PostProps) {
   const { dispatch } = useContext(ToDoContext);
-  const confirmDelete = () => {
-    const isConfirm = confirm(`are you sure to delete ${title}`);
-    if (isConfirm) {
-      openAction(id, !isOpen);
-    }
-  };
+
   return (
     <div className="post">
       <button

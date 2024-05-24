@@ -10,7 +10,7 @@ export const AuthContext = createContext({
   isLogin: false,
   username: "",
   logout: () => {},
-  login: (username: string) => {},
+  login: (_: string) => {},
 });
 
 function AuthContextProvider({ children }: Props) {

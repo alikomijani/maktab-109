@@ -38,7 +38,7 @@ export function useGetCourseById(courseId: string) {
       .then((data) => {
         setCourse(data);
       })
-      .catch((error) => {
+      .catch(() => {
         setIsError(true);
       })
       .finally(() => setIsLoading(false));

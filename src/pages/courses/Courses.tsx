@@ -15,7 +15,7 @@ function Courses() {
 
   const courseInfoAction = useCallback(
     (id: number) => {
-      navigate(`/courses/${id}`);
+      navigate(`/dashboard/courses/${id}`);
     },
     [navigate]
   );
