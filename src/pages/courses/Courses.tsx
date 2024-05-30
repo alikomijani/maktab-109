@@ -3,6 +3,7 @@ import Post from "../../components/Post/Post";
 import "./courses.style.css";
 import { useGetCourses } from "../../hooks/useGetCourses";
 import { useNavigate } from "react-router-dom";
+import { Box, Button, Grid, Paper, TextField } from "@mui/material";
 
 function Courses() {
   const [search, setSearch] = useState("");
@@ -21,32 +22,43 @@ function Courses() {
   );
 
   return (
-    <div>
-      <div className="search-wrapper">
-        <input
+    <Box>
+      <Box
+        component={Paper}
+        sx={{
+          display: "flex",
+          width: 300,
+          mx: "auto",
+          my: 2,
+          p: 2,
+        }}
+      >
+        <TextField
+          fullWidth
           value={search}
           onChange={handleSearch}
-          className="input"
           type="text"
+          label="جست و جو"
           placeholder="جست و جو"
         />
-        <button onClick={() => setSearch("")}>reset</button>
-      </div>
-      <div className="wrapper">
+        <Button onClick={() => setSearch("")}>reset</Button>
+      </Box>
+      <Grid container spacing={2}>
         {filteredCourses.map((course) => (
-          <Post
-            id={course.id}
-            openAction={toggleCourseStatus}
-            action={courseInfoAction}
-            key={course.id}
-            title={course.title}
-            description={course.description}
-            info={course.information}
-            isOpen={course.isOpen}
-          />
+          <Grid item key={course.id} xs={12} md={4} xl={3}>
+            <Post
+              id={course.id}
+              openAction={toggleCourseStatus}
+              action={courseInfoAction}
+              title={course.title}
+              description={course.description}
+              info={course.information}
+              isOpen={course.isOpen}
+            />
+          </Grid>
         ))}
-      </div>
-    </div>
+      </Grid>
+    </Box>
   );
 }
 

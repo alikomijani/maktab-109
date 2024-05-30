@@ -3,6 +3,7 @@ import { memo, useContext } from "react";
 import { pythonImage } from "../../assets";
 import { ToDoContext } from "../../context/ToDoContextProvider";
 import { ToDoActionTypesEnum } from "../../features/to-do";
+import { Button, Card, CardContent, Typography } from "@mui/material";
 type PostProps = {
   id: number;
   title: string;
@@ -28,34 +29,52 @@ function Post({
   const { dispatch } = useContext(ToDoContext);
 
   return (
-    <div className="post">
-      <button
-        onClick={() =>
-          dispatch({
-            type: ToDoActionTypesEnum.CREATE_TO_DO,
-            payload: {
-              todo: {
-                id: "60",
-                description: "این و خودم ساختم",
-                status: false,
-                subTasks: [],
-                title: " ثبت نام دوره" + title,
-              },
-            },
-          })
-        }
+    <Card elevation={3}>
+      <CardContent
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          alignItems: "center",
+          position: "relative",
+          overflow: "hidden",
+        }}
       >
-        {"افزودن یادآور"}
-      </button>
-      {isOpen && <div className={"post-badge"}>درحال ثبت نام</div>}
-      <h2 className="post-title">{title}</h2>
-      <img src={pythonImage} alt="" width={"25%"} />
-      <p className="post-description">{description}</p>
-      <div className="post-info">{info}</div>
-      <button className="button button--full" onClick={() => action(id)}>
-        {ctaText}
-      </button>
-    </div>
+        <Button
+          onClick={() =>
+            dispatch({
+              type: ToDoActionTypesEnum.CREATE_TO_DO,
+              payload: {
+                todo: {
+                  id: "60",
+                  description: "این و خودم ساختم",
+                  status: false,
+                  subTasks: [],
+                  title: " ثبت نام دوره" + title,
+                },
+              },
+            })
+          }
+        >
+          {"افزودن یادآور"}
+        </Button>
+        {isOpen && <div className={"post-badge"}>درحال ثبت نام</div>}
+        <Typography variant="h5" component="h2">
+          {title}
+        </Typography>
+        <img src={pythonImage} alt="" width={"25%"} />
+        <p className="post-description">{description}</p>
+        <div className="post-info">{info}</div>
+        <Button
+          fullWidth
+          color="secondary"
+          variant="contained"
+          onClick={() => action(id)}
+        >
+          {ctaText}
+        </Button>
+      </CardContent>
+    </Card>
   );
 }
 const MemoPost = memo(Post);
