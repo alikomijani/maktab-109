@@ -1,0 +1,10 @@
+.Button {
+  color: blue;
+}
+.Button.MuiButton-contained {
+  color: red;
+}
+
+.Button:disabled {
+  color: yellow;
+}

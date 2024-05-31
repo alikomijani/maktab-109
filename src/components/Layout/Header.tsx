@@ -22,7 +22,8 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import React from "react";
 import { drawerWidth } from "./Layout";
-
+import { ToggleThemeContext } from "../../context/ThemeContextProvider";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 type Props = {
   handleToggleDrawer: () => void;
 };
@@ -30,7 +31,7 @@ function Header(props: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
   const { username, logout } = useContext(AuthContext);
-
+  const { toggleTheme } = useContext(ToggleThemeContext);
   const handleProfileMenuOpen = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -100,6 +101,9 @@ function Header(props: Props) {
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Box>
+            <IconButton size="large" onClick={toggleTheme}>
+              <DarkModeIcon />
+            </IconButton>
             <IconButton
               size="large"
               aria-label="show 4 new mails"
