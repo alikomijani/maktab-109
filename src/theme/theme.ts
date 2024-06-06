@@ -1,5 +1,11 @@
 import { blue } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
+declare module "@mui/material/Button" {
+  interface ButtonPropsVariantOverrides {
+    dashed: true;
+  }
+}
+
 const baseTheme = createTheme({
   direction: "rtl",
   typography: {

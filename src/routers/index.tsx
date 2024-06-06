@@ -6,10 +6,11 @@ const Courses = lazy(() => import("../pages/courses/Courses"));
 const Course = lazy(() => import("../pages/courses/[id]/Course"));
 const ToDo = lazy(() => import("../pages/to-do/ToDo"));
 const Home = lazy(() => import("../pages/home/Home"));
-const Users = lazy(() => import("../pages/users/Users"));
+const Users = lazy(() => import("../pages/users/Users.tsx"));
 const ProfileLayout = lazy(
   () => import("../components/ProfileLayout/ProfileLayout")
 );
+const CreateCourse = lazy(() => import("../pages/courses/Create.tsx"));
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +37,14 @@ export const router = createBrowserRouter([
         element: (
           <Suspense fallback={<div>...loading</div>}>
             <Home />
+          </Suspense>
+        ),
+      },
+      {
+        path: "courses/create",
+        element: (
+          <Suspense fallback={<div>...loading</div>}>
+            <CreateCourse />
           </Suspense>
         ),
       },

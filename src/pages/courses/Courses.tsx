@@ -27,21 +27,31 @@ function Courses() {
         component={Paper}
         sx={{
           display: "flex",
-          width: 300,
+          justifyContent: "space-between",
+          width: 600,
           mx: "auto",
           my: 2,
           p: 2,
+          gap: 2,
         }}
       >
-        <TextField
-          fullWidth
-          value={search}
-          onChange={handleSearch}
-          type="text"
-          label="جست و جو"
-          placeholder="جست و جو"
-        />
-        <Button onClick={() => setSearch("")}>reset</Button>
+        <Button
+          onClick={() => navigate("/dashboard/courses/create")}
+          variant="contained"
+        >
+          افزودن دوره جدید
+        </Button>
+        <Box display="flex" flexGrow={1}>
+          <TextField
+            fullWidth
+            value={search}
+            onChange={handleSearch}
+            type="text"
+            label="جست و جو"
+            placeholder="جست و جو"
+          />
+          <Button onClick={() => setSearch("")}>reset</Button>
+        </Box>
       </Box>
       <Grid container spacing={2}>
         {filteredCourses.map((course) => (

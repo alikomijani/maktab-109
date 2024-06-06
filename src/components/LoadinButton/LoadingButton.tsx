@@ -2,10 +2,9 @@ import { Button, ButtonProps, CircularProgress } from "@mui/material";
 type Props = {
   isLoading?: boolean;
 } & ButtonProps;
-
 function LoadingButton({ isLoading, ...props }: Props) {
   return (
-    <Button variant="dashed" disabled={isLoading} {...props}>
+    <Button variant="dashed" disabled={isLoading}>
       {isLoading ? (
         <>
           loading...
