@@ -1,6 +1,6 @@
 import Header from "./Header";
 import Footer from "./Footer";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import {
   Box,
   Divider,
@@ -51,7 +51,9 @@ function Layout() {
           <MenuList>
             <MenuItem>داشبورد</MenuItem>
             <MenuItem>کاربران</MenuItem>
-            <MenuItem>دوره ها</MenuItem>
+            <MenuItem>
+              <Link to={"/dashboard/courses"}>دوره ها</Link>
+            </MenuItem>
             <MenuItem>وظایف</MenuItem>
           </MenuList>
         </Drawer>

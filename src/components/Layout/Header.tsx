@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContextProvider";
-import { Link } from "react-router-dom";
 import {
   AppBar,
   Badge,
@@ -30,7 +29,7 @@ type Props = {
 function Header(props: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
-  const { username, logout } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
   const { toggleTheme } = useContext(ToggleThemeContext);
   const handleProfileMenuOpen = (
     event: React.MouseEvent<HTMLButtonElement>

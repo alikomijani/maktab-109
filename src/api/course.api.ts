@@ -7,7 +7,6 @@ export type Course = {
   //   img: string;
   isOpen?: boolean;
 };
-
 export async function getCoursesApi() {
   const response = await api.get<Course[]>("/courses");
   return response.data;

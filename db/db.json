@@ -2,7 +2,7 @@
   "courses": [
     {
       "id": "1",
-      "title": "NodeJS",
+      "title": "3NodeJS",
       "description": "بوت‌کمپ‌های آموزشی-استخدامی مکتب",
       "information": "۲۸ هفته | ۴۰۰ ساعت",
       "isOpen": true
@@ -16,7 +16,7 @@
     },
     {
       "id": "3",
-      "title": "PHP",
+      "title": "Node",
       "description": "بوت‌کمپ‌های آموزشی-استخدامی مکتب",
       "information": "۲۸ هفته | ۴۰۰ ساعت",
       "isOpen": true
@@ -55,5 +55,10 @@
       "information": "۲۸ هفته | ۴۰۰ ساعت",
       "isOpen": false
     }
-  ]
+  ],
+  "user": {
+    "username": "komij",
+    "first_name": "Ali",
+    "last_name": "Komijani"
+  }
 }

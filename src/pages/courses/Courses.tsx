@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import Post from "../../components/Post/Post";
 import "./courses.style.css";
 import { useGetCourses } from "../../hooks/useGetCourses";
@@ -7,13 +7,13 @@ import { Box, Button, Grid, Paper, TextField } from "@mui/material";
 
 function Courses() {
   const [search, setSearch] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-  const { toggleCourseStatus, filteredCourses } = useGetCourses(search);
+  const { data } = useGetCourses();
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
-
   const courseInfoAction = useCallback(
     (id: number) => {
       navigate(`/dashboard/courses/${id}`);
@@ -43,6 +43,7 @@ function Courses() {
         </Button>
         <Box display="flex" flexGrow={1}>
           <TextField
+            ref={inputRef}
             fullWidth
             value={search}
             onChange={handleSearch}
@@ -54,11 +55,11 @@ function Courses() {
         </Box>
       </Box>
       <Grid container spacing={2}>
-        {filteredCourses.map((course) => (
+        {data?.map((course) => (
           <Grid item key={course.id} xs={12} md={4} xl={3}>
             <Post
               id={course.id}
-              openAction={toggleCourseStatus}
+              openAction={() => {}}
               action={courseInfoAction}
               title={course.title}
               description={course.description}

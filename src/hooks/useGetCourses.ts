@@ -1,51 +1,47 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Course,
   getCoursesApi,
   getCoursesApiById,
-  updateCourseIsOpenApi,
+  updateCourseApi,
 } from "../api/course.api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-export function useGetCourses(search: string) {
-  const [courses, setCourses] = useState<Course[]>([]);
-
-  useEffect(() => {
-    getCoursesApi().then((data) => setCourses(data));
-  }, []);
-
-  const toggleCourseStatus = useCallback((id: number, isOpen: boolean) => {
-    updateCourseIsOpenApi(id, isOpen).then(() => {
-      getCoursesApi().then((data) => setCourses(data));
-    });
-  }, []);
-  const filteredCourses = useMemo(() => {
-    return courses.filter((item) =>
-      item.title.toLowerCase().includes(search.toLowerCase())
-    );
-  }, [courses, search]);
-
-  return { courses, toggleCourseStatus, filteredCourses };
+export function useGetCourses() {
+  return useQuery({
+    queryKey: ["courses"],
+    queryFn: getCoursesApi,
+  });
 }
 
 export function useGetCourseById(courseId: string) {
-  const [course, setCourse] = useState<Course>();
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-  useEffect(() => {
-    setIsLoading(true);
-    setIsError(false);
-    getCoursesApiById(courseId!)
-      .then((data) => {
-        setCourse(data);
-      })
-      .catch(() => {
-        setIsError(true);
-      })
-      .finally(() => setIsLoading(false));
-  }, [courseId]);
-  return {
-    data: course,
-    isLoading,
-    isError,
-  };
+  return useQuery({
+    queryKey: ["course", courseId],
+    queryFn: () => getCoursesApiById(courseId!),
+    enabled: !!courseId,
+  });
+}
+
+export function useUpdateCourse() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ courseId, data }: { courseId: string; data: Course }) =>
+      updateCourseApi(courseId, data),
+    onSuccess(data) {
+      // queryClient.invalidateQueries({
+      //   queryKey: ["courses", data.id],
+      // });
+
+      // queryClient.invalidateQueries({
+      //   queryKey: ["courses"],
+      // });
+      //
+      queryClient.setQueryData(["course", data.id], () => {
+        return data;
+      });
+
+      queryClient.setQueryData(["courses"], (oldData: Course[]) => {
+        return oldData.map((item) => (item.id === data.id ? data : item));
+      });
+    },
+  });
 }
