@@ -1,38 +1,34 @@
-import { IToDo, ToDoActionTypesEnum } from "../../features/to-do";
 import { MdDelete } from "react-icons/md";
 import { FaCheck } from "react-icons/fa6";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
-import { useContext } from "react";
-import { ToDoContext } from "../../context/ToDoContextProvider";
-
+import { useAppDispatch } from "../../hooks";
+import {
+  IToDo,
+  changeStatus,
+  changeSubtaskStatus,
+  deleteToDo,
+  removeSubtask,
+} from "../../features/to-do/toDoSlice";
 type Props = {
   todo: IToDo;
 };
 
 const ToDoCard = ({ todo }: Props) => {
-  const { dispatch } = useContext(ToDoContext);
+  const dispatch = useAppDispatch();
   return (
     <div className="border p-4 rounded-md">
       <div className="flex justify-between gap-2">
         <h2 className="text-xl font-bold">{todo.title}</h2>
         <button
           className="btn"
-          onClick={() => {
-            dispatch({
-              type: ToDoActionTypesEnum.CHANGE_STATUS,
-              payload: { todoId: todo.id },
-            });
-          }}
+          onClick={() => dispatch(changeStatus({ todoId: todo.id }))}
         >
           {todo.status ? <FaCheck /> : <MdCheckBoxOutlineBlank />}
         </button>
         <button
           className="btn-icon"
           onClick={() => {
-            dispatch({
-              type: ToDoActionTypesEnum.REMOVE_TO_DO,
-              payload: { todoId: todo.id },
-            });
+            dispatch(deleteToDo({ todoId: todo.id }));
           }}
         >
           <MdDelete />
@@ -47,10 +43,9 @@ const ToDoCard = ({ todo }: Props) => {
               <button
                 className="btn"
                 onClick={() => {
-                  dispatch({
-                    type: ToDoActionTypesEnum.CHANGE_SUBTASK_STATUS,
-                    payload: { todoId: todo.id, taskId: subTask.id },
-                  });
+                  dispatch(
+                    changeSubtaskStatus({ todoId: todo.id, taskId: subTask.id })
+                  );
                 }}
               >
                 {subTask.status ? "انجام شده" : "انجام نشده"}
@@ -58,10 +53,12 @@ const ToDoCard = ({ todo }: Props) => {
               <button
                 className="btn-icon"
                 onClick={() => {
-                  dispatch({
-                    type: ToDoActionTypesEnum.REMOVE_SUBTASK,
-                    payload: { todoId: todo.id, taskId: subTask.id },
-                  });
+                  dispatch(
+                    removeSubtask({
+                      todoId: todo.id,
+                      taskId: subTask.id,
+                    })
+                  );
                 }}
               >
                 <MdDelete />

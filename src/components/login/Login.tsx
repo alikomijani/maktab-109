@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../../context/AuthContextProvider";
-
+import { useState } from "react";
+import { login } from "../../features/auth/authSlice";
+import { useAppDispatch } from "../../hooks";
 function Login() {
-  const { login } = useContext(AuthContext);
   const [username, setUsername] = useState("");
+  const dispatch = useAppDispatch();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(username);
+    dispatch(login({ token: "sample token", username }));
   };
   return (
     <div className="w-96 mx-auto  flex justify-center h-screen items-center">

@@ -1,10 +1,10 @@
 import { RouterProvider } from "react-router-dom";
-import AuthContextProvider from "./context/AuthContextProvider";
 import ThemeContextProvider from "./context/ThemeContextProvider";
-import ToDoContextProvider from "./context/ToDoContextProvider";
 import { router } from "./routers";
 import { CssBaseline } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import store from "./store";
+import { Provider } from "react-redux";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -14,19 +14,16 @@ const queryClient = new QueryClient({
     },
   },
 });
-
 function App() {
   return (
-    <ThemeContextProvider>
-      <QueryClientProvider client={queryClient}>
-        <AuthContextProvider>
+    <Provider store={store}>
+      <ThemeContextProvider>
+        <QueryClientProvider client={queryClient}>
           <CssBaseline />
-          <ToDoContextProvider>
-            <RouterProvider router={router} />
-          </ToDoContextProvider>
-        </AuthContextProvider>
-      </QueryClientProvider>
-    </ThemeContextProvider>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </ThemeContextProvider>
+    </Provider>
   );
 }
 

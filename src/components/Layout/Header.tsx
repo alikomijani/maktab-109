@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContextProvider";
 import {
   AppBar,
   Badge,
@@ -23,14 +22,18 @@ import React from "react";
 import { drawerWidth } from "./Layout";
 import { ToggleThemeContext } from "../../context/ThemeContextProvider";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
+import { logout } from "../../features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 type Props = {
   handleToggleDrawer: () => void;
 };
 function Header(props: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
-  const { logout } = useContext(AuthContext);
+  const dispatch = useAppDispatch();
+  const username = useAppSelector((state) => state.authSlice.username);
   const { toggleTheme } = useContext(ToggleThemeContext);
+  const notifCount = useAppSelector((state) => state.toDoSlice.length);
   const handleProfileMenuOpen = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -52,12 +55,12 @@ function Header(props: Props) {
         <ListItemIcon>
           <AccountBoxIcon fontSize="small" />
         </ListItemIcon>
-        <ListItemText>پروفایل</ListItemText>
+        <ListItemText>{username}</ListItemText>
       </MenuItem>
       <Divider />
       <MenuItem
         onClick={() => {
-          logout();
+          dispatch(logout());
           handleMenuClose();
         }}
       >
@@ -114,10 +117,10 @@ function Header(props: Props) {
             </IconButton>
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
+              aria-label={`show ${notifCount} new notifications`}
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={notifCount} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>

@@ -19,6 +19,7 @@ export async function getCoursesApiById(id: string) {
 
 export async function updateCourseApi(id: number | string, course: Course) {
   const response = await api.put<Course>(`/courses/${id}`, course);
+
   return response.data;
 }
 
