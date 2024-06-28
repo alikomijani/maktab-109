@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./features/auth/authSlice";
 import toDoSlice from "./features/to-do/toDoSlice";
 import { createLogger } from "redux-logger";
-import { loginUser } from "./api/auth.api";
 
 const logger = createLogger({
   // ...options
@@ -13,12 +12,7 @@ const store = configureStore({
     authSlice,
     toDoSlice,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      thunk: {
-        extraArgument: loginUser,
-      },
-    }).concat(logger),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
 export default store;
