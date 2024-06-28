@@ -1,12 +1,24 @@
 import { useState } from "react";
-import { login } from "../../features/auth/authSlice";
 import { useAppDispatch } from "../../hooks";
+import { loginUserThunk } from "../../api/auth.api";
 function Login() {
-  const [username, setUsername] = useState("");
+  const [data, setData] = useState({
+    username: "",
+    password: "",
+  });
+
   const dispatch = useAppDispatch();
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(login({ token: "sample token", username }));
+    dispatch(loginUserThunk(data));
+    // dispatch(startLogin());
+    // try {
+    //   const response = await api.post("auth/login", data);
+    //   const { role, token, username, refreshToken } = response.data;
+    //   dispatch(loginSuccess({ refreshToken, role, token, username }));
+    // } catch (e) {
+    //   dispatch(loginFailed({ error: "invalid username or password" }));
+    // }
   };
   return (
     <div className="w-96 mx-auto  flex justify-center h-screen items-center">
@@ -18,8 +30,8 @@ function Login() {
               className="block border p-1 w-full"
               type="text"
               name="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={data.username}
+              onChange={(e) => setData({ ...data, username: e.target.value })}
             />
           </label>
         </div>

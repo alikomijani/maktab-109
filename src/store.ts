@@ -1,13 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-
 import authSlice from "./features/auth/authSlice";
 import toDoSlice from "./features/to-do/toDoSlice";
+import { thunk } from "redux-thunk";
 
 const store = configureStore({
   reducer: {
     authSlice,
     toDoSlice,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });
 
 export default store;

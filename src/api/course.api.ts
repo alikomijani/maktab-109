@@ -30,4 +30,3 @@ export async function updateCourseIsOpenApi(
   const response = await api.patch<Course>(`/courses/${id}`, { isOpen });
   return response.data;
 }
-// create - read  - update - delete
