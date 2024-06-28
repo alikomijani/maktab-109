@@ -1,6 +1,6 @@
 import Header from "./Header";
 import Footer from "./Footer";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import {
   Box,
   Divider,
@@ -9,10 +9,18 @@ import {
   MenuList,
   Toolbar,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAppSelector } from "../../hooks";
 export const drawerWidth = 300;
 function Layout() {
   const [open, setOpen] = useState(false);
+  const isLogin = useAppSelector((state) => state.authSlice.isLogin);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/sign-in");
+    }
+  }, [navigate, isLogin]);
 
   return (
     <Box>

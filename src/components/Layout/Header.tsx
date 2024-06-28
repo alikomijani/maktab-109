@@ -31,7 +31,7 @@ function Header(props: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
   const dispatch = useAppDispatch();
-  const username = useAppSelector((state) => state.authSlice.username);
+  const username = useAppSelector((state) => state.authSlice.email);
   const { toggleTheme } = useContext(ToggleThemeContext);
   const notifCount = useAppSelector((state) => state.toDoSlice.length);
   const handleProfileMenuOpen = (

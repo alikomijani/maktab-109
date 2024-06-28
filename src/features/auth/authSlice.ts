@@ -1,23 +1,19 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { loginUserThunk } from "../../api/auth.api";
+import { User, loginUserThunk } from "../../api/auth.api";
 
 interface AuthType {
   isLogin: boolean;
-  token: string;
-  username: string;
+  accessToken: string;
+  email: string;
   permissions: string[];
-  role: string;
   isLoading: boolean;
   error: string;
-  refreshToken: string;
 }
 const initialState: AuthType = {
   isLogin: false,
-  username: "",
-  token: "",
-  refreshToken: "",
+  email: "",
+  accessToken: "",
   permissions: [],
-  role: "",
   isLoading: false,
   error: "",
 };
@@ -40,21 +36,17 @@ export const authSlice = createSlice({
     ) => {
       const payload = action.payload;
       state.isLogin = true;
-      state.username = payload.username;
-      state.token = payload.token;
-      state.refreshToken = payload.refreshToken;
-      state.role = payload.role;
+      state.email = payload.username;
+      state.accessToken = payload.token;
       state.isLoading = false;
     },
     loginFailed: (state, action: PayloadAction<{ error: string }>) => {
       state.isLoading = false;
       state.error = action.payload.error;
       state.isLogin = false;
-      state.username = "";
-      state.token = "";
-      state.refreshToken = "";
+      state.email = "";
+      state.accessToken = "";
       state.permissions = [];
-      state.role = "";
     },
     refreshSuccess: (
       state,
@@ -62,13 +54,12 @@ export const authSlice = createSlice({
         token: string;
       }>
     ) => {
-      state.token = action.payload.token;
+      state.accessToken = action.payload.token;
     },
     logout: (state) => {
       state.isLogin = false;
-      state.username = "";
-      state.token = "";
-      state.refreshToken = "";
+      state.email = "";
+      state.accessToken = "";
     },
   },
   extraReducers: (builder) => {
@@ -82,18 +73,14 @@ export const authSlice = createSlice({
         (
           state,
           action: PayloadAction<{
-            username: string;
-            token: string;
-            role: string;
-            refreshToken: string;
+            accessToken: string;
+            user: User;
           }>
         ) => {
           const payload = action.payload;
           state.isLogin = true;
-          state.username = payload.username;
-          state.token = payload.token;
-          state.refreshToken = payload.refreshToken;
-          state.role = payload.role;
+          state.email = payload.user.email;
+          state.accessToken = payload.accessToken;
           state.isLoading = false;
         }
       )
@@ -101,11 +88,9 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message ?? "";
         state.isLogin = false;
-        state.username = "";
-        state.token = "";
-        state.refreshToken = "";
+        state.email = "";
+        state.accessToken = "";
         state.permissions = [];
-        state.role = "";
       });
   },
 });

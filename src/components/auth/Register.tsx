@@ -1,24 +1,14 @@
 import { useState } from "react";
-import { useAppDispatch } from "../../hooks";
-import { loginUserThunk } from "../../api/auth.api";
-function Login() {
+import api from "../../api/config.api";
+function Register() {
   const [data, setData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
-
-  const dispatch = useAppDispatch();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(loginUserThunk(data));
-    // dispatch(startLogin());
-    // try {
-    //   const response = await api.post("auth/login", data);
-    //   const { role, token, username, refreshToken } = response.data;
-    //   dispatch(loginSuccess({ refreshToken, role, token, username }));
-    // } catch (e) {
-    //   dispatch(loginFailed({ error: "invalid username or password" }));
-    // }
+    const res = await api.post("register", data);
+    console.log(res.data);
   };
   return (
     <div className="w-96 mx-auto  flex justify-center h-screen items-center">
@@ -30,14 +20,26 @@ function Login() {
               className="block border p-1 w-full"
               type="text"
               name="username"
-              value={data.username}
-              onChange={(e) => setData({ ...data, username: e.target.value })}
+              value={data.email}
+              onChange={(e) => setData({ ...data, email: e.target.value })}
+            />
+          </label>
+        </div>
+        <div>
+          <label className="block">
+            <span> کلمه عبور:</span>
+            <input
+              className="block border p-1 w-full"
+              type="text"
+              name="password"
+              value={data.password}
+              onChange={(e) => setData({ ...data, password: e.target.value })}
             />
           </label>
         </div>
         <div className="mt-2">
           <button type="submit" className="btn">
-            Login
+            Register
           </button>
         </div>
       </form>
@@ -45,4 +47,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;

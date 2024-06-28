@@ -1,7 +1,9 @@
 import { Suspense, lazy } from "react";
-import { createBrowserRouter } from "react-router-dom";
+import { Outlet, createBrowserRouter } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
 import ErrorPage from "../pages/error/ErrorPage";
+import Login from "../components/auth/Login.tsx";
+import Register from "../components/auth/Register.tsx";
 const Courses = lazy(() => import("../pages/courses/Courses"));
 const Course = lazy(() => import("../pages/courses/[id]/Course"));
 const ToDo = lazy(() => import("../pages/to-do/ToDo"));
@@ -14,16 +16,28 @@ const CreateCourse = lazy(() => import("../pages/courses/Create.tsx"));
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <div></div>,
+    element: (
+      <div>
+        <Outlet />
+      </div>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
         path: "sign-in",
-        element: <div></div>,
+        element: (
+          <div>
+            <Login />
+          </div>
+        ),
       },
       {
         path: "sign-up",
-        element: <div></div>,
+        element: (
+          <div>
+            <Register />
+          </div>
+        ),
       },
     ],
   },

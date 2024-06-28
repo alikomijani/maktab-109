@@ -1,12 +1,21 @@
-import api from "./config.api";
 import {
   loginFailed,
   loginSuccess,
-  refreshSuccess,
   startLogin,
 } from "../features/auth/authSlice";
-import store, { AppDispatch } from "../store";
+import { AppDispatch } from "../store";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+
+const baseURL = "http://localhost:3001";
+
+const api = axios.create({
+  baseURL: baseURL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 type LoginResponseType = {
   role: string;
   token: string;
@@ -37,25 +46,25 @@ export const loginUser = async (data: {
   };
 };
 
-export const getNewAccessToken =
-  () => async (dispatch: AppDispatch, getState: typeof store.getState) => {
-    dispatch(startLogin());
-    const state = getState();
-    try {
-      const response = await api.post("auth/refresh", {
-        refreshToken: state.authSlice.refreshToken,
-      });
-      //success
-      dispatch(
-        refreshSuccess({
-          token: response.data.token,
-        })
-      );
-    } catch (e) {
-      console.log(e);
-      dispatch(loginFailed({ error: "invalid credential" }));
-    }
-  };
+// export const getNewAccessToken =
+//   () => async (dispatch: AppDispatch, getState: typeof store.getState) => {
+//     dispatch(startLogin());
+//     const state = getState();
+//     try {
+//       const response = await api.post("auth/refresh", {
+//         refreshToken: state.authSlice.refreshToken,
+//       });
+//       //success
+//       dispatch(
+//         refreshSuccess({
+//           token: response.data.token,
+//         })
+//       );
+//     } catch (e) {
+//       console.log(e);
+//       dispatch(loginFailed({ error: "invalid credential" }));
+//     }
+//   };
 
 export const getUserPermissions = async () => {
   try {
@@ -68,11 +77,17 @@ export const getUserPermissions = async () => {
     //error
   }
 };
-
+export type User = {
+  email: string;
+  id: number;
+};
 export const loginUserThunk = createAsyncThunk(
-  "todos/fetchTodos",
-  async ({ username, password }: { username: string; password: string }) => {
-    const response = await api.post("/auth/login", { username, password });
+  "auth/loginUser",
+  async ({ email, password }: { email: string; password: string }) => {
+    const response = await api.post<{ accessToken: string; user: User }>(
+      "/login",
+      { email, password }
+    );
     return response.data;
   }
 );
