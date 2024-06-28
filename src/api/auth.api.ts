@@ -22,10 +22,7 @@ type LoginResponseType = {
   username: string;
   refreshToken: string;
 };
-export const loginUser = async (data: {
-  username: string;
-  password: string;
-}) => {
+export const loginUser = (data: { email: string; password: string }) => {
   return async function loginUserThunk(dispatch: AppDispatch) {
     dispatch(startLogin());
     try {

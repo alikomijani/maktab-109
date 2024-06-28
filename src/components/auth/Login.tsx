@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { loginUserThunk } from "../../api/auth.api";
+import { loginUser, loginUserThunk } from "../../api/auth.api";
 import { useNavigate } from "react-router-dom";
 function Login() {
   const [data, setData] = useState({
@@ -12,8 +12,8 @@ function Login() {
   const navigate = useNavigate();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(loginUserThunk(data));
-    // dispatch(loginUser(data));
+    // dispatch(loginUserThunk(data));
+    dispatch(loginUser(data));
   };
   useEffect(() => {
     if (authState.isLogin) {
