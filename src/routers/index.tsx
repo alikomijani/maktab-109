@@ -2,42 +2,44 @@ import { Suspense, lazy } from "react";
 import { Outlet, createBrowserRouter } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
 import ErrorPage from "../pages/error/ErrorPage";
-import Login from "../components/auth/Login.tsx";
-import Register from "../components/auth/Register.tsx";
-const Courses = lazy(() => import("../pages/courses/Courses"));
-const Course = lazy(() => import("../pages/courses/[id]/Course"));
-const ToDo = lazy(() => import("../pages/to-do/ToDo"));
-const Home = lazy(() => import("../pages/home/Home"));
-const Users = lazy(() => import("../pages/users/Users.tsx"));
-const ProfileLayout = lazy(
-  () => import("../components/ProfileLayout/ProfileLayout")
+const Courses = loadable(lazy(() => import("../pages/courses/Courses")));
+const Course = loadable(lazy(() => import("../pages/courses/[id]/Course")));
+const ToDo = loadable(lazy(() => import("../pages/to-do/ToDo")));
+const Home = loadable(lazy(() => import("../pages/home/Home")));
+const Users = loadable(lazy(() => import("../pages/users/Users.tsx")));
+const ProfileLayout = loadable(
+  lazy(() => import("../components/ProfileLayout/ProfileLayout"))
 );
-const CreateCourse = lazy(() => import("../pages/courses/Create.tsx"));
+const LoginPage = loadable(lazy(() => import("../pages/login.tsx")));
+const RegisterPage = loadable(lazy(() => import("../pages/register.tsx")));
+const CreateCourse = loadable(
+  lazy(() => import("../pages/courses/Create.tsx"))
+);
+const HomePage = loadable(lazy(() => import("../pages/index.tsx")));
+function loadable(Component: React.ElementType) {
+  return (
+    <Suspense fallback={<div>...loading</div>}>
+      <Component />
+    </Suspense>
+  );
+}
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <div>
-        <Outlet />
-      </div>
-    ),
+    element: <Outlet />,
     errorElement: <ErrorPage />,
     children: [
       {
+        index: true,
+        element: HomePage,
+      },
+      {
         path: "sign-in",
-        element: (
-          <div>
-            <Login />
-          </div>
-        ),
+        element: LoginPage,
       },
       {
         path: "sign-up",
-        element: (
-          <div>
-            <Register />
-          </div>
-        ),
+        element: RegisterPage,
       },
     ],
   },
@@ -48,35 +50,19 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <Suspense fallback={<div>...loading</div>}>
-            <Home />
-          </Suspense>
-        ),
+        element: Home,
       },
       {
         path: "courses/create",
-        element: (
-          <Suspense fallback={<div>...loading</div>}>
-            <CreateCourse />
-          </Suspense>
-        ),
+        element: CreateCourse,
       },
       {
         path: "courses",
-        element: (
-          <Suspense fallback={<div>...loading</div>}>
-            <Courses />
-          </Suspense>
-        ),
+        element: Courses,
       },
       {
         path: "users",
-        element: (
-          <Suspense fallback={<div>...loading</div>}>
-            <Users />
-          </Suspense>
-        ),
+        element: Users,
       },
       {
         path: "courses/create",
@@ -84,28 +70,16 @@ export const router = createBrowserRouter([
       },
       {
         path: "courses/:courseId",
-        element: (
-          <Suspense fallback={<div>...loading</div>}>
-            <Course />
-          </Suspense>
-        ),
+        element: Course,
       },
       {
         path: "to-dos",
-        element: (
-          <Suspense fallback={<div>...loading</div>}>
-            <ToDo />
-          </Suspense>
-        ),
+        element: ToDo,
       },
       {
         path: "profile",
         errorElement: <ErrorPage />,
-        element: (
-          <Suspense fallback={<div>...loading</div>}>
-            <ProfileLayout />
-          </Suspense>
-        ),
+        element: ProfileLayout,
         children: [
           {
             index: true,
