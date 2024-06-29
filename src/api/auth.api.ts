@@ -24,7 +24,7 @@ export const loginUser = (data: { email: string; password: string }) => {
   return async function loginUserThunk(dispatch: AppDispatch) {
     dispatch(startLogin());
     try {
-      const response = await api.post<LoginResponseType>("auth/login", data);
+      const response = await api.post<LoginResponseType>("/login", data);
       //success
       dispatch(
         loginSuccess({

@@ -1,5 +1,5 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { ChangeEvent, useState } from "react";
+import { useAppDispatch } from "../../hooks";
 import { loginUser } from "../../api/auth.api";
 import { useNavigate } from "react-router-dom";
 import {
@@ -22,7 +22,6 @@ function LoginForm() {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setData((old) => ({ ...old, [e.target.name]: e.target.value }));
   };
-  const authState = useAppSelector((state) => state.authSlice);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -30,11 +29,6 @@ function LoginForm() {
     // dispatch(loginUserThunk(data));
     dispatch(loginUser(data));
   };
-  useEffect(() => {
-    if (authState.isLogin) {
-      navigate("/dashboard");
-    }
-  }, [authState.isLogin, navigate]);
 
   return (
     <AuthTemplate>
