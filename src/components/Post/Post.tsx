@@ -1,9 +1,9 @@
 import "./post.style.css";
-import { memo, useContext } from "react";
+import { memo } from "react";
 import { pythonImage } from "../../assets";
-import { ToDoContext } from "../../context/ToDoContextProvider";
-import { ToDoActionTypesEnum } from "../../features/to-do";
 import { Button, Card, CardContent, Typography } from "@mui/material";
+import { useAppDispatch } from "../../hooks";
+import { createToDo } from "../../features/to-do/toDoSlice";
 type PostProps = {
   id: number;
   title: string;
@@ -26,8 +26,7 @@ function Post({
   // image,
   isOpen = false,
 }: PostProps) {
-  const { dispatch } = useContext(ToDoContext);
-
+  const dispatch = useAppDispatch();
   return (
     <Card elevation={3}>
       <CardContent
@@ -42,9 +41,8 @@ function Post({
       >
         <Button
           onClick={() =>
-            dispatch({
-              type: ToDoActionTypesEnum.CREATE_TO_DO,
-              payload: {
+            dispatch(
+              createToDo({
                 todo: {
                   id: "60",
                   description: "این و خودم ساختم",
@@ -52,8 +50,8 @@ function Post({
                   subTasks: [],
                   title: " ثبت نام دوره" + title,
                 },
-              },
-            })
+              })
+            )
           }
         >
           {"افزودن یادآور"}
