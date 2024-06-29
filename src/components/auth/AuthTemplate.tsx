@@ -13,7 +13,7 @@ function AuthTemplate({ children }: Props) {
           "linear-gradient(45deg, rgba(0,203,255,1) 100%, rgba(248,0,251,1) 100%)",
       }}
     >
-      <div className="w-96 mx-auto  flex justify-center h-screen items-center">
+      <div className="w-[450px] mx-auto  flex justify-center h-screen items-center">
         {children}
       </div>
     </Box>

@@ -56,11 +56,5 @@
       "isOpen": false
     }
   ],
-  "users": [
-    {
-      "email": "akpa125@gmail.com",
-      "password": "$2a$10$bAbX5wVnsm44l7dcepurc.fH1qUnw4UhmKEA9Az3MCHHamS/jvvO2",
-      "id": 1
-    }
-  ]
+  "users": []
 }

@@ -17,10 +17,8 @@ const api = axios.create({
 });
 
 type LoginResponseType = {
-  role: string;
-  token: string;
-  username: string;
-  refreshToken: string;
+  accessToken: string;
+  user: User;
 };
 export const loginUser = (data: { email: string; password: string }) => {
   return async function loginUserThunk(dispatch: AppDispatch) {
@@ -30,10 +28,8 @@ export const loginUser = (data: { email: string; password: string }) => {
       //success
       dispatch(
         loginSuccess({
-          role: response.data.role,
-          token: response.data.token,
-          username: response.data.username,
-          refreshToken: response.data.refreshToken,
+          accessToken: response.data.accessToken,
+          user: response.data.user,
         })
       );
     } catch (e) {
@@ -77,14 +73,16 @@ export const getUserPermissions = async () => {
 export type User = {
   email: string;
   id: number;
+  first_name: string;
+  last_name: string;
 };
 export const loginUserThunk = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }: { email: string; password: string }) => {
-    const response = await api.post<{ accessToken: string; user: User }>(
-      "/login",
-      { email, password }
-    );
+    const response = await api.post<LoginResponseType>("/login", {
+      email,
+      password,
+    });
     return response.data;
   }
 );
