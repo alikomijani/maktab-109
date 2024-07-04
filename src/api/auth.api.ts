@@ -1,9 +1,11 @@
 import {
   loginFailed,
   loginSuccess,
+  logout,
+  refreshSuccess,
   startLogin,
 } from "../features/auth/authSlice";
-import { AppDispatch } from "../store";
+import { AppDispatch, RootState } from "../store";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -35,6 +37,23 @@ export const loginUser = (data: { email: string; password: string }) => {
     } catch (e) {
       console.log(e);
       dispatch(loginFailed({ error: "invalid credential" }));
+    }
+  };
+};
+
+export const getRefreshToken = () => {
+  return async function getRefreshTokenThunk(
+    dispatch: AppDispatch,
+    getStore: () => RootState
+  ) {
+    const refreshToken = getStore().authSlice.refreshToken;
+    try {
+      const response = await api.post("/auth/refresh", {
+        refreshToken,
+      });
+      dispatch(refreshSuccess({ accessToken: response.data.accessToken }));
+    } catch {
+      dispatch(logout());
     }
   };
 };

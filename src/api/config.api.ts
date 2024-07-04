@@ -1,5 +1,7 @@
 import axios from "axios";
 import store from "../store";
+import { logout } from "../features/auth/authSlice";
+import { getRefreshToken } from "./auth.api";
 const baseURL = "http://localhost:3001";
 
 const api = axios.create({
@@ -24,4 +26,25 @@ api.interceptors.request.use(
   }
 );
 
+api.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  async function (error) {
+    const originalRequest = error.config;
+    if (error.response.status === 401) {
+      store.dispatch(getRefreshToken());
+      if (!originalRequest._retry) {
+        originalRequest._retry = true;
+        const token = store.getState().authSlice.accessToken;
+        originalRequest.headers.Authorization = "bearer " + token;
+        return axios(originalRequest);
+      } else {
+        store.dispatch(logout());
+      }
+    } else {
+      return Promise.reject(error);
+    }
+  }
+);
 export default api;

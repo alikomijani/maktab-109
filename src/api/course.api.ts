@@ -1,3 +1,4 @@
+import store from "../store";
 import api from "./config.api";
 export type Course = {
   id: number;
@@ -18,7 +19,12 @@ export async function getCoursesApiById(id: string) {
 }
 
 export async function updateCourseApi(id: number | string, course: Course) {
-  const response = await api.put<Course>(`/courses/${id}`, course);
+  const token = store.getState().authSlice.accessToken;
+  const response = await api.put<Course>(`/courses/${id}`, course, {
+    headers: {
+      Authorization: `bearer ${token}`,
+    },
+  });
 
   return response.data;
 }

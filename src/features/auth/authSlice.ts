@@ -7,9 +7,11 @@ interface AuthType {
   isLoading: boolean;
   error: string;
   user: User | null;
+  refreshToken: string;
 }
 const initialState: AuthType = {
   accessToken: "",
+  refreshToken: "",
   permissions: [],
   isLoading: false,
   error: "",
@@ -45,10 +47,10 @@ export const authSlice = createSlice({
     refreshSuccess: (
       state,
       action: PayloadAction<{
-        token: string;
+        accessToken: string;
       }>
     ) => {
-      state.accessToken = action.payload.token;
+      state.accessToken = action.payload.accessToken;
     },
     logout: (state) => {
       state.isLoading = false;
