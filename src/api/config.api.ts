@@ -1,7 +1,6 @@
 import axios from "axios";
 import { store } from "../store";
 import { logout } from "../features/auth/authSlice";
-import { getAccessToken } from "./auth.api";
 const baseURL = "http://localhost:3001";
 
 const api = axios.create({
@@ -16,7 +15,7 @@ api.interceptors.request.use(
     // Do something before request is sent
     const state = store.getState();
     if (state.authSlice.accessToken) {
-      config.headers.Authorization = state.authSlice.accessToken;
+      config.headers.Authorization = `Bearer ${state.authSlice.accessToken}`;
     }
     return config;
   },
@@ -31,17 +30,8 @@ api.interceptors.response.use(
     return response;
   },
   async function (error) {
-    const originalRequest = error.config;
     if (error.response.status === 401) {
-      store.dispatch(getAccessToken());
-      if (!originalRequest._retry) {
-        originalRequest._retry = true;
-        const token = store.getState().authSlice.accessToken;
-        originalRequest.headers.Authorization = token;
-        return axios(originalRequest);
-      } else {
-        store.dispatch(logout());
-      }
+      store.dispatch(logout());
     } else {
       return Promise.reject(error);
     }
