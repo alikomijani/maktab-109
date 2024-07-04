@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { Box, Card, CardContent, CardHeader } from "@mui/material";
 import { useGetCourseById } from "../../../hooks/useGetCourses";
 import EditCourseComponent from "../../../components/forms/EditCourseComponent";
+import WithGuard from "../../../components/withGuard/WithGuard";
 
 function CoursePage() {
   const { courseId } = useParams();
@@ -29,9 +30,11 @@ function CoursePage() {
           </Box>
         </CardContent>
       </Card>
-      <Box flexBasis={"400px"} flexGrow={0}>
-        <EditCourseComponent />
-      </Box>
+      <WithGuard permission="edit_product">
+        <Box flexBasis={"400px"} flexGrow={0}>
+          <EditCourseComponent />
+        </Box>
+      </WithGuard>
     </Box>
   );
 }

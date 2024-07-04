@@ -36,6 +36,7 @@ export const authSlice = createSlice({
       state.accessToken = payload.accessToken;
       state.isLoading = false;
       state.user = payload.user;
+      state.permissions = payload.user.permissions;
     },
     loginFailed: (state, action: PayloadAction<{ error: string }>) => {
       state.isLoading = false;

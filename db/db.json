@@ -62,7 +62,8 @@
       "password": "$2a$10$yOJnDLT3QIrVqBgaUE7CGeyd/Sf4Tq/pXVNlakne1jryV.qq7EIW6",
       "last_name": "کمیج",
       "first_name": "علی",
-      "id": 1
+      "id": 1,
+      "permissions": ["add_product", "edit_product", "delete_product"]
     }
   ]
 }
