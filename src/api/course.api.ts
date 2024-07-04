@@ -1,4 +1,3 @@
-import store from "../store";
 import api from "./config.api";
 export type Course = {
   id: number;
@@ -19,13 +18,7 @@ export async function getCoursesApiById(id: string) {
 }
 
 export async function updateCourseApi(id: number | string, course: Course) {
-  const token = store.getState().authSlice.accessToken;
-  const response = await api.put<Course>(`/courses/${id}`, course, {
-    headers: {
-      Authorization: `bearer ${token}`,
-    },
-  });
-
+  const response = await api.put<Course>(`/courses/${id}`, course);
   return response.data;
 }
 
@@ -33,6 +26,6 @@ export async function updateCourseIsOpenApi(
   id: number | string,
   isOpen: boolean
 ) {
-  const response = await api.patch<Course>(`/courses/${id}`, { isOpen });
+  const response = await api.patch<Course>(`/664/courses/${id}`, { isOpen });
   return response.data;
 }

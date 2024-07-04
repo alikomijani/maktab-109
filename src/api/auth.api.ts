@@ -41,8 +41,8 @@ export const loginUser = (data: { email: string; password: string }) => {
   };
 };
 
-export const getRefreshToken = () => {
-  return async function getRefreshTokenThunk(
+export const getAccessToken = () => {
+  return async function getAccessTokenThunk(
     dispatch: AppDispatch,
     getStore: () => RootState
   ) {

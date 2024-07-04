@@ -1,21 +1,27 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authSlice from "./features/auth/authSlice";
-import toDoSlice from "./features/to-do/toDoSlice";
+
 import { createLogger } from "redux-logger";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+import rootReducer from "./features/rootReducer";
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const logger = createLogger({
   // ...options
 });
 
-const store = configureStore({
-  reducer: {
-    authSlice,
-    toDoSlice,
-  },
+export const store = configureStore({
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
+export const persistor = persistStore(store);
 
-export default store;
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}

@@ -7,7 +7,6 @@ import { isLoginSelector } from "../features/auth/authSelector";
 function LoginPage() {
   const isLogin = useAppSelector(isLoginSelector);
   const navigate = useNavigate();
-
   useEffect(() => {
     if (isLogin) {
       navigate("/dashboard");
