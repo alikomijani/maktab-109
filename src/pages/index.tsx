@@ -1,8 +1,9 @@
 import { Navigate } from "react-router-dom";
 import { useAppSelector } from "../hooks";
+import { isLoginSelector } from "../features/auth/authSelector";
 
 function HomeLandingPage() {
-  const isLogin = useAppSelector((state) => state.authSlice.isLogin);
+  const isLogin = useAppSelector(isLoginSelector);
   return (
     <div>
       <Navigate to={isLogin ? "/dashboard" : "/sign-in"} />

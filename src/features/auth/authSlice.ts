@@ -2,7 +2,6 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { User, loginUserThunk } from "../../api/auth.api";
 
 interface AuthType {
-  isLogin: boolean;
   accessToken: string;
   permissions: string[];
   isLoading: boolean;
@@ -10,7 +9,6 @@ interface AuthType {
   user: User | null;
 }
 const initialState: AuthType = {
-  isLogin: false,
   accessToken: "",
   permissions: [],
   isLoading: false,
@@ -33,7 +31,6 @@ export const authSlice = createSlice({
       }>
     ) => {
       const payload = action.payload;
-      state.isLogin = true;
       state.accessToken = payload.accessToken;
       state.isLoading = false;
       state.user = payload.user;
@@ -41,7 +38,6 @@ export const authSlice = createSlice({
     loginFailed: (state, action: PayloadAction<{ error: string }>) => {
       state.isLoading = false;
       state.error = action.payload.error;
-      state.isLogin = false;
       state.accessToken = "";
       state.permissions = [];
       state.user = null;
@@ -57,7 +53,6 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.isLoading = false;
       state.error = "";
-      state.isLogin = false;
       state.accessToken = "";
       state.permissions = [];
       state.user = null;
@@ -79,7 +74,6 @@ export const authSlice = createSlice({
           }>
         ) => {
           const payload = action.payload;
-          state.isLogin = true;
           state.accessToken = payload.accessToken;
           state.isLoading = false;
           state.user = payload.user;
@@ -88,7 +82,6 @@ export const authSlice = createSlice({
       .addCase(loginUserThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message ?? "";
-        state.isLogin = false;
         state.accessToken = "";
         state.permissions = [];
       });
@@ -97,4 +90,5 @@ export const authSlice = createSlice({
 
 export const { loginSuccess, loginFailed, logout, startLogin, refreshSuccess } =
   authSlice.actions;
+
 export default authSlice.reducer;

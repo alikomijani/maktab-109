@@ -2,16 +2,17 @@ import { useNavigate } from "react-router-dom";
 import RegisterForm from "../components/auth/RegisterFrom";
 import { useAppSelector } from "../hooks";
 import { useEffect } from "react";
+import { isLoginSelector } from "../features/auth/authSelector";
 
 function RegisterPage() {
-  const authState = useAppSelector((state) => state.authSlice);
+  const isLogin = useAppSelector(isLoginSelector);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (authState.isLogin) {
+    if (isLogin) {
       navigate("/dashboard");
     }
-  }, [authState.isLogin, navigate]);
+  }, [isLogin, navigate]);
   return <RegisterForm />;
 }
 

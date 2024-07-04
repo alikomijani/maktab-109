@@ -11,10 +11,11 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../hooks";
+import { isLoginSelector } from "../../features/auth/authSelector";
 export const drawerWidth = 300;
 function Layout() {
   const [open, setOpen] = useState(false);
-  const isLogin = useAppSelector((state) => state.authSlice.isLogin);
+  const isLogin = useAppSelector(isLoginSelector);
   const navigate = useNavigate();
   useEffect(() => {
     if (!isLogin) {

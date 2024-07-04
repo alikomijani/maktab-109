@@ -13,7 +13,7 @@ api.interceptors.request.use(
   function (config) {
     // Do something before request is sent
     const state = store.getState();
-    if (state.authSlice.isLogin) {
+    if (state.authSlice.accessToken) {
       config.headers.Authorization = "bearer " + state.authSlice.accessToken;
     }
     return config;
